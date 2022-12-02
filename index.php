@@ -6,7 +6,18 @@ $letter = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','
 $LetterM = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 
 $generalpsw = array_merge($number, $symbol, $letter, $LetterM);
+$clearPsw = implode('', $generalpsw);
 
+$generatepsw = randomPsw($_GET['lenght'], $clearPsw);
+
+function randomPsw($lenght, $string){
+  $pswUser = '';
+  for($i = 0; $i <= $lenght; $i++) {
+    $index = rand(0, strlen($string) -1);
+    $pswUser .= $string[$index];
+  };
+  return $pswUser;
+};
 
 ?>
 
@@ -30,16 +41,18 @@ $generalpsw = array_merge($number, $symbol, $letter, $LetterM);
         <h1>Generatore di Password</h1>
       </div>
     </div>
-    <div class="row">
+    <div class="row m-auto mb-3">
+      <?php if(!empty($generatepsw)) :?>
       <div class="col">
-
+        <?php echo $generatepsw ?>
       </div>
+      <?php endif ?>
     </div>
     <div class="row m-auto">
       <div class="col">
         <form action="index.php" method="GET">
-          <label for="numberpsw">Quanto deve essere lunga la password?</label>
-          <input type="number" name="numberpsw" placeholder="Lunghezza Password">
+          <label for="lenght">Quanto deve essere lunga la password?</label>
+          <input type="number" name="lenght" placeholder="Lunghezza Password">
           <button class="btn btn-primary" type="submit">Crea</button>
         </form>
       </div>
