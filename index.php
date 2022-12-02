@@ -1,22 +1,28 @@
 <?php 
-
+// faccio array separati così da gestire meglio i dati per eventuali filtri
 $number = ['0','1','2','3','4','5','6','7','8','9'];
 $symbol = ['!','?','&','%','$','<','>','^','+','-','*','/','(',')','[',']','{','}','@','#','_','='];
 $letter = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
 $LetterM = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-
+// fondo gli array in un unico così da generare una password generale senza filtri
 $generalpsw = array_merge($number, $symbol, $letter, $LetterM);
+// ripulisco l'array
 $clearPsw = implode('', $generalpsw);
-
 $generatepsw = randomPsw($_GET['lenght'], $clearPsw);
-
+// funzione random
 function randomPsw($lenght, $string){
   $pswUser = '';
-  for($i = 0; $i <= $lenght; $i++) {
-    $index = rand(0, strlen($string) -1);
-    $pswUser .= $string[$index];
+  if(!empty($lenght)){
+    var_dump($string);
+    var_dump($lenght);
+    for($i = 0; $i <= $lenght; $i++) {
+      $index = rand(0, strlen($string) -1);
+      $pswUser .= $string[$index];
+    };
+    return $pswUser;
+  }else {
+    return '';
   };
-  return $pswUser;
 };
 
 ?>
@@ -41,13 +47,7 @@ function randomPsw($lenght, $string){
         <h1>Generatore di Password</h1>
       </div>
     </div>
-    <div class="row m-auto mb-3">
-      <?php if(!empty($generatepsw)) :?>
-      <div class="col">
-        <?php echo $generatepsw ?>
-      </div>
-      <?php endif ?>
-    </div>
+
     <div class="row m-auto">
       <div class="col">
         <form action="index.php" method="GET">
@@ -56,6 +56,14 @@ function randomPsw($lenght, $string){
           <button class="btn btn-primary" type="submit">Crea</button>
         </form>
       </div>
+    </div>
+
+    <div class="row m-auto mb-3 bg-">
+      <?php if(!empty($generatepsw)) :?>
+      <div class="col">
+        <?php echo $generatepsw ?>
+      </div>
+      <?php endif; ?>
     </div>
   </div>
 
