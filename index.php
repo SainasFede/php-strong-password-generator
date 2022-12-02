@@ -1,4 +1,7 @@
 <?php 
+
+require_once __DIR__ . '/function.php';
+
 // faccio array separati così da gestire meglio i dati per eventuali filtri
 $number = ['0','1','2','3','4','5','6','7','8','9'];
 $symbol = ['!','?','&','%','$','<','>','^','+','-','*','/','(',')','[',']','{','}','@','#','_','='];
@@ -9,21 +12,6 @@ $generalpsw = array_merge($number, $symbol, $letter, $LetterM);
 // ripulisco l'array
 $clearPsw = implode('', $generalpsw);
 $generatepsw = randomPsw($_GET['lenght'], $clearPsw);
-// funzione random
-function randomPsw($lenght, $string){
-  $pswUser = '';
-  if(!empty($lenght)){
-    var_dump($string);
-    var_dump($lenght);
-    for($i = 0; $i <= $lenght; $i++) {
-      $index = rand(0, strlen($string) -1);
-      $pswUser .= $string[$index];
-    };
-    return $pswUser;
-  }else {
-    return '';
-  };
-};
 
 ?>
 
@@ -58,9 +46,9 @@ function randomPsw($lenght, $string){
       </div>
     </div>
 
-    <div class="row m-auto mb-3 bg-">
+    <div class="row m-auto mb-3">
       <?php if(!empty($generatepsw)) :?>
-      <div class="col">
+      <div class="col-12">
         <?php echo $generatepsw ?>
       </div>
       <?php endif; ?>
